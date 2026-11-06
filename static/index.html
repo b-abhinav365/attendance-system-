@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Student Attendance System</title>
+<style>body{font-family:sans-serif;max-width:700px;margin:2rem auto}input,select,button{margin:3px;padding:6px}fieldset{margin:1rem 0}pre{background:#eee;padding:8px}</style></head><body>
+<h2>Student Attendance &amp; Performance</h2>
+<fieldset><legend>Faculty</legend><input id=u placeholder=username><input id=p type=password placeholder=password>
+<button onclick="go('/api/faculty/register',{username:u.value,password:p.value})">Register</button>
+<button onclick="go('/api/login',{username:u.value,password:p.value})">Login</button></fieldset>
+<fieldset><legend>Student</legend><input id=r placeholder=roll_no><input id=n placeholder=name><input id=d placeholder=department>
+<button onclick="go('/api/students',{roll_no:r.value,name:n.value,department:d.value})">Add</button></fieldset>
+<fieldset><legend>Attendance</legend><input id=ad type=date><select id=as><option>P<option>A</select>
+<button onclick="go('/api/attendance',{roll_no:r.value,date:ad.value,status:as.value})">Mark/Update</button>
+<button onclick="get('/api/attendance/'+r.value)">View %</button></fieldset>
+<fieldset><legend>Marks</legend><input id=s placeholder=subject><input id=m type=number placeholder=marks>
+<button onclick="go('/api/marks',{roll_no:r.value,subject:s.value,marks:+m.value})">Save</button>
+<button onclick="get('/api/report/'+r.value)">Report</button></fieldset>
+<pre id=o></pre>
+<script>
+const show=async x=>o.textContent=JSON.stringify(await x.json(),null,2);
+const go=(u,b)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(show);
+const get=u=>fetch(u).then(show);
+</script></body></html>
