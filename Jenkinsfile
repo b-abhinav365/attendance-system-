@@ -23,8 +23,8 @@ pipeline {
 
         stage('Install') {
             steps {
-                bat 'python --version'
-                bat 'python -m venv venv'
+                bat '"%PYTHON%" --version'
+                bat '"%PYTHON%" -m venv venv'
                 bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
                 bat 'venv\\Scripts\\python.exe -m pip install -r requirements.txt flake8 pytest'
             }
