@@ -50,9 +50,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat 'docker rm -f attendance 2>NUL || ver >NUL'
-                bat 'docker run -d --name attendance -p 5000:5000 %IMAGE%:latest'
-                bat 'timeout /t 5 /nobreak >NUL'
+                bat '"%PYTHON%" --version'
+                bat '"%PYTHON%" -m venv venv'
+                bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
+                bat 'venv\\Scripts\\python.exe -m pip install -r requirements.txt flake8 pytest'
             }
         }
 
