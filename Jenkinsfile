@@ -9,6 +9,7 @@ pipeline {
 
     environment {
         IMAGE = "attendance-system"
+        PYTHON = 'C:\\Users\\basar\\AppData\\Local\\Programs\\Python\\Python312\\python.exe'
     }
 
     stages {
