@@ -50,10 +50,19 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat '"%PYTHON%" --version'
-                bat '"%PYTHON%" -m venv venv'
-                bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
-                bat 'venv\\Scripts\\python.exe -m pip install -r requirements.txt flake8 pytest'
+                echo 'Deploying Attendance System...'
+
+                // Remove existing container if present
+                bat 'docker rm -f attendance 2>NUL || ver >NUL'
+        
+                // Start the newly built Docker image
+                bat 'docker run -d --name attendance -p 5000:5000 attendance-system:latest'
+        
+                // Wait for application startup
+                bat 'timeout /t 10 /nobreak >NUL'
+        
+                // Verify container status
+                bat 'docker ps --filter "name=attendance"'
             }
         }
 
