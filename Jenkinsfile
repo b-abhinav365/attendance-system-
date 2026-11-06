@@ -59,7 +59,7 @@ pipeline {
                 bat 'docker run -d --name attendance -p 5000:5000 attendance-system:latest'
         
                 // Wait for application startup
-                bat 'timeout /t 10 /nobreak >NUL'
+                powershell 'Start-Sleep -Seconds 10'
         
                 // Verify container status
                 bat 'docker ps --filter "name=attendance"'
